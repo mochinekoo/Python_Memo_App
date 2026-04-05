@@ -1,11 +1,21 @@
 import sys
 import tkinter
+from tkinter import filedialog
 
 window = tkinter.Tk()
 window.wm_title("メモ帳")
 
+def openTextChooseDialog():
+    fileSelectType = [("テキストファイル", ".txt")]
+    filePath = tkinter.filedialog.askopenfilename(filetypes=fileSelectType)
+    return filePath
+
 def runOpenFileCommand():
-    pass
+    selectFile = openTextChooseDialog()
+    if selectFile == "":
+        print("何も選ばれませんでした")
+    else:
+        print(selectFile)
 
 def runSaveCommand():
     pass
