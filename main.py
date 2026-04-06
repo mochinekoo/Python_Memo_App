@@ -1,8 +1,9 @@
 import sys
 import tkinter
-from tkinter import filedialog
+from tkinter import filedialog, Text
 from tkinter import Button
 from tkinter import Frame
+from tkinter import messagebox
 
 window = tkinter.Tk()
 
@@ -11,20 +12,33 @@ def openTextChooseDialog():
     filePath = tkinter.filedialog.askopenfilename(filetypes=fileSelectType)
     return filePath
 
+def openTextSaveDialog():
+    fileSelectType = [("テキストファイル", ".txt")]
+    savePath = tkinter.filedialog.asksaveasfilename(filetypes=fileSelectType)
+    return savePath
+
 def runOpenFileCommand():
-    selectFile = openTextChooseDialog()
-    if selectFile == "":
+    selectPath = openTextChooseDialog()
+    if selectPath == "":
         print("何も選ばれませんでした")
     else:
-        print(selectFile)
+        print(selectPath)
 
 def runSaveCommand():
-    pass
+    entryText = entry.get("1.0", "end")
+    selectPath = openTextSaveDialog()
+    if selectPath == "":
+        tkinter.messagebox.showerror(title="エラー", message="ファイルが選ばれませんでした")
+    else:
+        file = open(selectPath, 'x', encoding="UTF-8")
+        file.write(entryText)
+        tkinter.messagebox.showinfo(title="成功", message="正常にファイルが保存されました")
 
 def runExitCommand():
     sys.exit(0)
 
 def windowInit():
+    global entry
     window.wm_title("メモ帳")
     window.wm_geometry("1280x720")
 
